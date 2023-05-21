@@ -17,7 +17,7 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
-  check_cache:
+  update_file:
     docker:
       - image: cimg/base:stable
     steps:
@@ -39,6 +39,18 @@ jobs:
           key: cache-v1-hoge
           paths:
             - cache-dir
+  check_cache:
+    docker:
+        - image: cimg/base:stable
+    steps:
+      - restore_cache:
+          name: "Restore Cache from prev job"
+          keys:
+            - cache-v1-hoge
+      - run:
+          name: "Output File Content"
+          command: |
+            cat cache-dir/hoge.txt
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
