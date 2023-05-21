@@ -29,7 +29,9 @@ jobs:
       - run:
           name: "Output File Content"
           command: |
-            mkdir cache-dir
+            if [ ! -d cache-dir ]; then
+              mkdir cache-dir
+            fi
             echo `date` >> cache-dir/hoge.txt
             cat cache-dir/hoge.txt
       - save_cache:
